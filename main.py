@@ -21,6 +21,8 @@ async def predict(file: UploadFile = File(...)):
     # Use Google Generative AI model for image classification
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(["Determine the type of image if it is (CT), (MRI), or (X-ray) or (not).", img], stream=True)
+    response=response.resolve()
+
 
     # Return the result as JSON
-    return JSONResponse(content={"classification": response.text})
+    return JSONResponse(content={"classification": response})
