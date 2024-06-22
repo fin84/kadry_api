@@ -4,7 +4,8 @@ import google.generativeai as genai
 from PIL import Image
 
 # Configure Google Generative AI
-genai.configure(api_key="AIzaSyDsew44Tp85JUa_w980KOLojgVxCJjEJHw")
+genai.configure(api_key="AIzaSyAFAmVIP6l33PQUj5G0Yk05RyH9u42g1gg")
+model = genai.GenerativeModel('gemini-pro')
 
 app = FastAPI()
 
