@@ -25,4 +25,4 @@ async def predict(file: UploadFile = File(...)):
 
 
     # Return the result as JSON
-    return JSONResponse(content={"classification": response})
+    return JSONResponse(content={"classification": response.text})
