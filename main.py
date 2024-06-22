@@ -10,19 +10,18 @@ app = FastAPI()
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    # Save the uploaded file to a temporary location
-    temp_file_path = f"{file.filename}"
-    with open(temp_file_path, "wb") as f:
-        f.write(await file.read())
+    try:
+        # Open the uploaded file
+        image = Image.open(file.file)
+        
+        # Since the AI model might need raw bytes, we will directly read the file content
     
-    # Open the image file
-    img = Image.open(temp_file_path)
-    
-    # Use Google Generative AI model for image classification
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    response = model.generate_content(["Determine the type of image if it is (CT), (MRI), or (X-ray) or (not).", img], stream=True)
-    #response=response.resolve()
-
-
-    # Return the result as JSON
-    return JSONResponse(content={"classification": response.text})
+        
+        # Generate the AI response
+        response = model.generate_content(["choose the type of image only if it is CT, MRI, or X-ray or not select  only one  and not explain anything   .", image], stream=True)
+        response.resolve()
+        
+        # Extract and return the response text
+        return {"image_type": response.text}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"An error occurred: {e}")
