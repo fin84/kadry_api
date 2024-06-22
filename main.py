@@ -8,8 +8,8 @@ genai.configure(api_key="AIzaSyDsew44Tp85JUa_w980KOLojgVxCJjEJHw")
 
 app = FastAPI()
 
-@app.post("/classify-image")
-async def classify_image(file: UploadFile = File(...)):
+@app.post("/predict")
+async def predict(file: UploadFile = File(...)):
     # Save the uploaded file to a temporary location
     temp_file_path = f"{file.filename}"
     with open(temp_file_path, "wb") as f:
